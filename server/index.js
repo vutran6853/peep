@@ -25,10 +25,13 @@ const { getAllUser, registerUser } = require('./controller/peepApiController');
 
 //// Connect to PostgreSQL Database and define 'db' on app
 massive(process.env.DB_CONNECT_STRING)
-.then((dbInstance) => app.set('db', dbInstance))
+.then((dbInstance) => {
+  console.log('Connet to Database...');
+  app.set('db', dbInstance)
+})
 .catch((error) => console.log(`Danger unable to connect to Database`));
 
-////  User Endpoint
+////  User Endpoint RESTFull API
 app.get('/api/allUser', getAllUser)
 app.post('/api/register', registerUser)
 
