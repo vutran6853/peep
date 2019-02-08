@@ -1,52 +1,36 @@
-const express = require('express');
-const { json } = require('body-parser');
-const port = 3010;
-const app = express()
-const cors = require('cors');
-const mysql = require('promise-mysql');
-// var mysql=require('mysql');
-const { getUser } = require('./controller/peepApi');
+////  define environment variable
+require('dotenv').config()
 
+////  Express middleware
+const express = require('express');
+
+////  JSON middleware
+const { json } = require('body-parser');
+
+////  cors for http/all origins 
+const cors = require('cors');
+
+////  Massive middleware for PostgreSQL
+const massive = require('massive');
+
+const port = 3010;
+
+////  define express on app
+const app = express()
 app.use(json());
 app.use(cors());
 
+////  Endpoint callback fuction controller
+const { getAllUser, registerUser } = require('./controller/peepApiController');
 
-mysql.createConnection({
-  connectionLimit: 10,
-  host: 'localhost',
-  user: 'dbuser',
-  password: 's3kreee7',
-  database: 'my_db'
-  // port: 3306
-})
-.then((response) => {
-  console.log(response)
-})
-.catch((error) => {
-  console.log(`Danger! Backend error: ${ error }`)
-});
-
-// var mysql      = require('mysql');
-// var connection = mysql.createConnection({
-//   host: '192.168.0.7',
-//   user: 'root',
-//   password: '',
-//   database: 'mydb'
-// });
-
-
-// connection.connect();
-
-// connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
-//   if (error) throw error;
-//   console.log('The solution is: ', results[0].solution);
-// });
-
-// connection.end();
+//// Connect to PostgreSQL Database and define 'db' on app
+massive(process.env.DB_CONNECT_STRING)
+.then((dbInstance) => app.set('db', dbInstance))
+.catch((error) => console.log(`Danger unable to connect to Database`));
 
 ////  User Endpoint
-app.get('/api/user', getUser)
-
+app.get('/api/allUser', getAllUser)
+app.post('/api/register', registerUser)
 
 //// Listen to Backend Server
 app.listen(port, () => {
