@@ -1,3 +1,4 @@
+const Sequelize = require('sequelize');
 function registerUser(req, res, next) {
   const dbInstance = req.app.get('db');
   
@@ -9,13 +10,13 @@ function registerUser(req, res, next) {
 }
 
 function getAllUser(req, res, next) {
-  const dbInstance = req.app.get('db');
-
-  dbInstance.getAllUsernameList()
-  .then((response) => {
-    res.status(200).send(response)
-  })
-  .catch((error) => console.log(`Danger! Can't fetch list of users`));
+  // const dbInstance = req.app.get('db');
+  console.log('HIT getAllUser');
+  // dbInstance.getAllUsernameList()
+  // .then((response) => {
+  //   res.status(200).send(response)
+  // })
+  // .catch((error) => console.log(`Danger! Can't fetch list of users`));
 }
 
 
