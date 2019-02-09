@@ -14,11 +14,3 @@ services:
     image: postgres
     ports: 
       - '5432:5432'
-    
-    environment:
-      POSTGRES_USER: 'oesrnqnohtgkxj'
-      POSTGRES_PASSWORD: 142ab8760cd3d878c5f170325ab0bf1875d89516386cdcc7d744d730ebbcd81d
-      PGDATABASE: 'd6om9fi9vc9ekq'
-      PGHOST: 'ec2-54-163-246-159.compute-1.amazonaws.com'
-
-      
